@@ -4,8 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainGame extends JFrame {
-	
 
+	//Hello World!
+	
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			@Override
