@@ -16,12 +16,12 @@ public class MainGame extends JFrame {
 	}
 	
 	
-	DrawingPanel drpanel = new DrawingPanel();
+	DrawingPanel drPanel = new DrawingPanel();
 	
 	MainGame(){
 		setupObjects();		
 		setupJFrame("Example");
-		this.add(drpanel);		 
+		this.add(drPanel);		 
 
 		this.setVisible(true);		
         //timer1.start();
