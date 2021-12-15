@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 public class MainGame extends JFrame {
 
 	//Hello World!
+	//Hello its Ashwin!
 	
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -26,6 +27,7 @@ public class MainGame extends JFrame {
 
 		this.setVisible(true);		
         //timer1.start();
+		
 	}
 	
 	void setupObjects() {
