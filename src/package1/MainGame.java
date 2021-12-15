@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,11 +16,11 @@ public class MainGame extends JFrame {
 	}
 	
 	
-	JPanel drpanel;
+	DrawingPanel drpanel = new DrawingPanel();
 	
 	MainGame(){
 		setupObjects();		
-		setupJFrame("Intersection of circle and line");
+		setupJFrame("Example");
 		this.add(drpanel);		 
 
 		this.setVisible(true);		
@@ -37,5 +39,11 @@ public class MainGame extends JFrame {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
+	class DrawingPanel extends JPanel {
+		@Override
+		public void paintComponent(Graphics g) {
+			g.drawRect(100, 100, 100, 100);
+		}
+	}
 
 }
