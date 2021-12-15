@@ -1,3 +1,5 @@
+package package1;
+
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
