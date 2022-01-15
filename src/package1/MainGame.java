@@ -4,10 +4,12 @@
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.text.AttributeSet.ColorAttribute;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,12 +79,12 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g); 
+			map.paint(g);
+			player.paint(g);
 			g.fillRect(mouseX-10, mouseY, 7, 3); 
 			g.fillRect(mouseX+7, mouseY, 7, 3);
 			g.fillRect(mouseX, mouseY+7, 3, 7);
 			g.fillRect(mouseX, mouseY-10, 3, 7);
-			map.paint(g);
-			player.paint(g);
 			for(Bullets z : bulletList) {				
 				g.fillOval(z.x, z.y, z.width, z.height);
 			}
@@ -113,18 +115,13 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		}
 
 		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
-		}
+		public void keyReleased(KeyEvent e) {}
 
 		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-
-		}
+		public void keyTyped(KeyEvent e) {}
 	}
 	long lastShot = 0;
+	
 	void shoot() {
 		if (bulletList.size() >= Bullets.MAXBULLETS) return;
 
@@ -133,7 +130,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		if (elapsed < Bullets.SHOTDELAY) return;
 
 		lastShot = now;
-		Bullets bullet = new Bullets(500, 500);
+		Bullets bullet = new Bullets(player.x+player.width/2, player.y+player.height/2);
 		bulletList.add(bullet);
 	}
 
