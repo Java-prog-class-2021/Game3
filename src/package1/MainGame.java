@@ -33,8 +33,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 
 	ArrayList<Bullets> bulletList = new ArrayList<Bullets>();
 
-	
-	DrawingPanel drPanel = new DrawingPanel();
+
 	Character player = new Character(985,500,30,50);
 	Map map = new Map(-10,-10,2000,1200);
 	MainGame(){
@@ -42,21 +41,21 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		moveLasers();
 
 		setupJFrame("Example");
-		this.add(drpanel);		 
+		this.add(drPanel);		 
 
 		drPanel.addMouseListener(this);
 		drPanel.addMouseMotionListener(this);
-		
+
 		Timer timer = new Timer(10,this);
 		timer.start();
 
 		this.setVisible(true);		
-        //timer1.start();
+		//timer1.start();
 	}
 
 	void setupObjects() {
 		//	panel  = new DrawingPanel();
-        //  etc
+		//  etc
 	}
 
 	void setupJFrame(String title) {
@@ -66,7 +65,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.addKeyListener(new Key());
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		moveLasers();
@@ -91,6 +90,40 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	}
 	class Key implements KeyListener{
 
+
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode()==KeyEvent.VK_W) {
+				map.pMoveUp(player);
+				drPanel.repaint();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_A) {
+				map.pMoveLeft(player);
+				drPanel.repaint();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_D) {
+				map.pMoveRight(player);
+				drPanel.repaint();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_S) {
+				map.pMoveDown(player);
+				drPanel.repaint();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+	}
 	long lastShot = 0;
 	void shoot() {
 		if (bulletList.size() >= Bullets.MAXBULLETS) return;
@@ -105,14 +138,14 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	}
 
 	void moveLasers() {
-			for (Bullets z : bulletList) {
-				z.y -= z.speed;
-			}
+		for (Bullets z : bulletList) {
+			z.y -= z.speed;
+		}
 
-			for(Bullets z : bulletList) {
-				if (z.y < 0) bulletList.remove(z);
-				break;
-			}
+		for(Bullets z : bulletList) {
+			if (z.y < 0) bulletList.remove(z);
+			break;
+		}
 	}
 
 	@Override
@@ -124,8 +157,9 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	}
 
 	@Override
-		mouseX = e.getX();
+
 	public void mouseDragged(MouseEvent e) {
+		mouseX = e.getX();
 		mouseY = e.getY();
 		drPanel.repaint();
 		this.setTitle(mouseX + ", " + mouseY);
@@ -152,36 +186,5 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	public void mouseEntered(MouseEvent e) {}
 
 	public void mouseExited(MouseEvent e) {}
-	@Override
-		@Override
-		public void keyTyped(KeyEvent e) {
-			
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode()==KeyEvent.VK_W) {
-				map.pMoveUp(player);
-				drPanel.repaint();
-			}
-			if(e.getKeyCode()==KeyEvent.VK_A) {
-				map.pMoveLeft(player);
-				drPanel.repaint();
-			}
-			if(e.getKeyCode()==KeyEvent.VK_D) {
-				map.pMoveRight(player);
-				drPanel.repaint();
-			}
-			if(e.getKeyCode()==KeyEvent.VK_S) {
-				map.pMoveDown(player);
-				drPanel.repaint();
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
 }
+
