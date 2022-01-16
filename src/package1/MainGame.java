@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainGame extends JFrame implements MouseListener, MouseMotionListener, ActionListener{
+	
 	int mouseX, mouseY;
+	
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -77,15 +79,17 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g); 
-			g.fillRect(mouseX-10, mouseY, 7, 3); 
-			g.fillRect(mouseX+7, mouseY, 7, 3);
-			g.fillRect(mouseX, mouseY+7, 3, 7);
-			g.fillRect(mouseX, mouseY-10, 3, 7);
+			
 			map.paint(g);
 			player.paint(g);
 			for(Bullets z : bulletList) {				
 				g.fillOval(z.x, z.y, z.width, z.height);
 			}
+			
+			g.fillRect(mouseX-10, mouseY, 7, 3); 
+			g.fillRect(mouseX+7, mouseY, 7, 3);
+			g.fillRect(mouseX, mouseY+7, 3, 7);
+			g.fillRect(mouseX, mouseY-10, 3, 7);
 		}
 	}
 	class Key implements KeyListener{
@@ -138,8 +142,16 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	}
 
 	void moveLasers() {
+		
 		for (Bullets z : bulletList) {
-			z.y -= z.speed;
+			final int zx = z.speedCalcX(mouseX, player);;
+			final int zy = z.speedCalcY(mouseY, player);;
+			
+			z.y -= zy;
+			z.x -= zx;
+			
+			
+			System.out.println(z.speedCalcY(mouseY, player) + ", " + z.speedCalcX(mouseX, player));
 		}
 
 		for(Bullets z : bulletList) {
@@ -169,15 +181,12 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	public void mouseClicked(MouseEvent e) {
 		shoot();
 		drPanel.repaint();
+		
 	}
 
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		shoot();
-		moveLasers();
-		drPanel.repaint();
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {}
