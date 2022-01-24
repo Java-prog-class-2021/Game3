@@ -1,6 +1,5 @@
 
 
-
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -35,7 +34,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	DrawingPanel drPanel = new DrawingPanel();
 
 	ArrayList<Bullets> bulletList = new ArrayList<Bullets>();
-
+	int panW, panH;
 
 	Character player = new Character(985,500,30,50);
 
@@ -43,10 +42,12 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	Map map = new Map(-10,-10,2000,1200);
 	MainGame(){
 		setupObjects();
-		moveLasers();
+		moveBullets();
 
 		setupJFrame("Example");
-		this.add(drPanel);		 
+		this.add(drPanel);	
+		panW = drPanel.getWidth();
+		panH = drPanel.getHeight();
 
 		drPanel.addMouseListener(this);
 		drPanel.addMouseMotionListener(this);
@@ -73,15 +74,16 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		moveLasers();
+		moveBullets();
 		drPanel.repaint();		
 	}
 
 
 	class DrawingPanel extends JPanel {
+		
 		@Override
 		public void paintComponent(Graphics g) {
-			super.paintComponent(g); 
+			//super.paintComponent(g); 
 			map.paint(g);
 			player.paint(g);
 			for(Bullets z : bulletList) {				
@@ -98,21 +100,18 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode()==KeyEvent.VK_W) {
-				player.moveUp();
-				drPanel.repaint();
+				player.moveUp();				
 			}
 			if(e.getKeyCode()==KeyEvent.VK_A) {
-				player.moveLeft();
-				drPanel.repaint();
+				player.moveLeft();				
 			}
 			if(e.getKeyCode()==KeyEvent.VK_D) {
-				player.moveRight();
-				drPanel.repaint();
+				player.moveRight();				
 			}
 			if(e.getKeyCode()==KeyEvent.VK_S) {
-				player.moveDown();
-				drPanel.repaint();
+				player.moveDown();				
 			}
+			drPanel.repaint();
 		}
 
 		@Override
@@ -134,22 +133,23 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		long elapsed = now - lastShot;
 		if (elapsed < Bullets.SHOTDELAY) return;
 			lastShot = now;
-			Bullets bullet = new Bullets(pCenterX, pCenterY);
+			Bullets bullet = new Bullets(pCenterX, pCenterY, mouseX, mouseY);
 			bulletList.add(bullet);
-			bulletList.get(bulletList.size()-1).speedCalcX(mouseX, pCenterX);//only calculates for the last bullet
-			bulletList.get(bulletList.size()-1).speedCalcY(mouseY, pCenterY);
+//			bulletList.get(bulletList.size()-1).speedCalcX(mouseX, pCenterX);//only calculates for the last bullet
+//			bulletList.get(bulletList.size()-1).speedCalcY(mouseY, pCenterY);
 			this.setTitle(mouseX + ", " + mouseY + ", " + mClicked);	
 	}
 
-	void moveLasers() {
+	void moveBullets() {
 		
 		for (Bullets z : bulletList) {
-			z.y -= z.speedY;
-			z.x += z.speedX;
-			
+			z.move();			
 		}
+		
 		for(Bullets z : bulletList) {
-			if (z.y < 0 || z.x < 0) bulletList.remove(z);
+			if (z.y < 0 || z.x < 0) bulletList.remove(z);			
+			//TODO: also if they go off of the other two sides
+			
 			break;
 		}
 	}
