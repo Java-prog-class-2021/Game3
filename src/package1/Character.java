@@ -18,4 +18,16 @@ class Character {
 		g.setColor(Color.BLACK);
 		g.fillOval(x,y,width,height);
 	}
+	void moveRight() {
+		x+=speed;
+	}
+	void moveLeft() {
+		x-=speed;
+	}
+	void moveUp() {
+		y-=speed;
+	}
+	void moveDown() {
+		y+=speed;
+	}
 }

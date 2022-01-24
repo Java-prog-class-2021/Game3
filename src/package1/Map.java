@@ -1,6 +1,4 @@
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.Color;
 public class Map {
 	int x,y,width,length;
@@ -15,7 +13,7 @@ public class Map {
 		g.setColor(Color.GREEN);
 		g.fillRect(x,y,width,length);
 	}
-	
+	/*
 	private boolean outOfBoundsEast(Character c) {
 		if((c.x+c.width)>=(x+width)) {
 			return true;
@@ -58,5 +56,5 @@ public class Map {
 			y-=c.speed;
 		}
 	}
-	
+	*/
 }

@@ -10,8 +10,8 @@ class Bullets extends Rectangle{
 	static final int SHOTDELAY = 250; //milliseconds between each shot
 	
 	
-	int calcY;  //yspeed
-	int calcX;
+	double speedY;  //yspeed
+	double speedX;
 	
 	Bullets(int x, int y){
 		this.x = x;
@@ -21,18 +21,12 @@ class Bullets extends Rectangle{
 	}
 	
 	
-	int speedCalcX(int mouseX, Character player) {
+	void speedCalcX( int mouseX,  int xCoord) {
 		
-		calcX = (mouseX-(player.x+player.width/2))/250;
-		
-		return calcX;
+		speedX = (mouseX-xCoord)/250;
 	}
 	
-	int speedCalcY(int mouseY, Character player) {
-		
-		
-		calcY = (mouseY-(player.y+player.height/2))/100;
-
-		return calcY;
+	void speedCalcY( int mouseY,  int yCoord) {
+		speedY = (mouseY-yCoord)/250;
 	}
 }
