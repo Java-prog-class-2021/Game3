@@ -33,7 +33,7 @@ class Bullets extends Rectangle{
 		speedY = (pCenterY-mouseY)/10;
 	}
 	void angleCalc() {
-		
+		double angle = Math.tan(speedY/speedX);
 	}
 	
 }
