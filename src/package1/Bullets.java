@@ -1,6 +1,5 @@
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.awt.Graphics;
 import java.lang.Math;
 
@@ -9,7 +8,7 @@ class Bullets extends Rectangle{
 	
 	
 	static final int MAXBULLETS = 20; //max number of lasers (shots) on screen at one time
-	static final int SHOTDELAY = 250; //milliseconds between each shot
+	static final  int SHOTDELAY = 250; //milliseconds between each shot
 	
 	double xx, yy;
 	double speedY = 10.0;  //yspeed

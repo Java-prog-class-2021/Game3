@@ -16,11 +16,11 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 public class MainGame extends JFrame implements MouseListener, MouseMotionListener, ActionListener{
-	
+
 	int mouseX, mouseY;
 	int mClicked=0;
 
-	
+
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -38,7 +38,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 
 	Character player = new Character(985,500,30,50);
 
-	
+
 	Map map = new Map(-10,-10,2000,1200);
 	MainGame(){
 		setupObjects();
@@ -80,7 +80,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 
 
 	class DrawingPanel extends JPanel {
-		
+
 		@Override
 		public void paintComponent(Graphics g) {
 			//super.paintComponent(g); 
@@ -89,41 +89,92 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			for(Bullets z : bulletList) {				
 				z.paint(g);
 			}
-			
+
 			g.fillRect(mouseX-10, mouseY, 7, 3); //draws crosshair
 			g.fillRect(mouseX+7, mouseY, 7, 3);
 			g.fillRect(mouseX, mouseY+7, 3, 7);
 			g.fillRect(mouseX, mouseY-10, 3, 7);
 		}
 	}
+//	class KeyW implements KeyListener{
+//		@Override
+//		public void keyPressed(KeyEvent e) {
+//			if(e.getKeyCode()==KeyEvent.VK_W) {
+//				player.moveUp();				
+//			}
+//			drPanel.repaint();
+//		}
+//
+//		@Override
+//		public void keyTyped(KeyEvent e) {}
+//
+//		@Override
+//		public void keyReleased(KeyEvent e) {}
+//	}	
+//
+//	class KeyA implements KeyListener{
+//		@Override
+//		public void keyPressed(KeyEvent e) {
+//			if(e.getKeyCode()==KeyEvent.VK_A) {
+//				player.moveLeft();				
+//			}
+//			drPanel.repaint();
+//		}
+//
+//		@Override
+//		public void keyTyped(KeyEvent e) {}
+//
+//		@Override
+//		public void keyReleased(KeyEvent e) {}
+//	}
+//
+//	class KeyS implements KeyListener{
+//		@Override
+//		public void keyPressed(KeyEvent e) {
+//			if(e.getKeyCode()==KeyEvent.VK_S) {
+//				player.moveDown();				
+//			}
+//			drPanel.repaint();
+//		}
+//
+//		@Override
+//		public void keyReleased(KeyEvent e) {}
+//
+//		@Override
+//		public void keyTyped(KeyEvent e) {}
+//	}
+
 	class Key implements KeyListener{
+		boolean left,right,up,down;
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_A) left = false;
+			if (e.getKeyCode() == KeyEvent.VK_D) right = false;
+			if (e.getKeyCode() == KeyEvent.VK_W) up = false;
+			if (e.getKeyCode() == KeyEvent.VK_S) down = false;
+		}
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode()==KeyEvent.VK_W) {
-				player.moveUp();				
-			}
-			if(e.getKeyCode()==KeyEvent.VK_A) {
-				player.moveLeft();				
-			}
-			if(e.getKeyCode()==KeyEvent.VK_D) {
-				player.moveRight();				
-			}
-			if(e.getKeyCode()==KeyEvent.VK_S) {
-				player.moveDown();				
-			}
-			drPanel.repaint();
+			if (e.getKeyCode() == KeyEvent.VK_A) left = true;
+			if (e.getKeyCode() == KeyEvent.VK_D) right = true;
+			if (e.getKeyCode() == KeyEvent.VK_W) up = true;
+			if (e.getKeyCode() == KeyEvent.VK_S) down = true;
+			if(left)player.moveLeft();
+			if(right)player.moveRight();
+			if(up)player.moveUp();
+			if(down)player.moveDown();
 		}
 
-		@Override
-		public void keyReleased(KeyEvent e) {}
+		
+		
 
 		@Override
 		public void keyTyped(KeyEvent e) {}
+		
 	}
-	
-	
+
 	long lastShot = 0;
-	
+
 	void shoot() {
 		int pCenterX = player.x+player.width/2;
 		int pCenterY = player.y+player.height/2;//finds center of the players
@@ -132,24 +183,37 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		long now = System.currentTimeMillis();
 		long elapsed = now - lastShot;
 		if (elapsed < Bullets.SHOTDELAY) return;
-			lastShot = now;
-			Bullets bullet = new Bullets(pCenterX, pCenterY, mouseX, mouseY);
-			bulletList.add(bullet);
-//			bulletList.get(bulletList.size()-1).speedCalcX(mouseX, pCenterX);//only calculates for the last bullet
-//			bulletList.get(bulletList.size()-1).speedCalcY(mouseY, pCenterY);
-			this.setTitle(mouseX + ", " + mouseY + ", " + mClicked);	
+		lastShot = now;
+		Bullets bullet = new Bullets(pCenterX, pCenterY, mouseX, mouseY);
+		bulletList.add(bullet);
+		//	bulletList.get(bulletList.size()-1).speedCalcX(mouseX, pCenterX);//only calculates for the last bullet
+		//	bulletList.get(bulletList.size()-1).speedCalcY(mouseY, pCenterY);
+		this.setTitle(mouseX + ", " + mouseY + ", " + mClicked);	
+	}
+	void throwGrenade() {
+		int pCenterX = player.x+player.width/2;
+		int pCenterY = player.y+player.height/2;//finds center of the players
+
+		long now = System.currentTimeMillis();
+		long elapsed = now - lastShot;
+		if (elapsed < Bullets.SHOTDELAY) return;
+		lastShot = now;
+		Grenade grenade = new Grenade(pCenterX, pCenterY,elapsed, mouseX, mouseY);
+		//	bulletList.get(bulletList.size()-1).speedCalcX(mouseX, pCenterX);//only calculates for the last bullet
+		//	bulletList.get(bulletList.size()-1).speedCalcY(mouseY, pCenterY);
+		this.setTitle(mouseX + ", " + mouseY + ", " + mClicked);	
 	}
 
 	void moveBullets() {
-		
+
 		for (Bullets z : bulletList) {
 			z.move();			
 		}
-		
+
 		for(Bullets z : bulletList) {
 			if (z.y < 0 || z.x < 0) bulletList.remove(z);			
 			//TODO: also if they go off of the other two sides
-			
+
 			break;
 		}
 	}
@@ -176,7 +240,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		shoot();
 		mClicked++;
 		drPanel.repaint();
-		
+
 	}
 
 
