@@ -38,8 +38,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 
 
 	Character player = new Character(985,500,30,50);
-	int pCenterX = player.x+player.width/2;
-	int pCenterY = player.y+player.height/2;//finds center of the players
+
 	
 	Map map = new Map(-10,-10,2000,1200);
 	MainGame(){
@@ -86,10 +85,10 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			map.paint(g);
 			player.paint(g);
 			for(Bullets z : bulletList) {				
-				g.fillOval(z.x, z.y, z.width, z.height);
+				z.paint(g);
 			}
 			
-			g.fillRect(mouseX-10, mouseY, 7, 3); 
+			g.fillRect(mouseX-10, mouseY, 7, 3); //draws crosshair
 			g.fillRect(mouseX+7, mouseY, 7, 3);
 			g.fillRect(mouseX, mouseY+7, 3, 7);
 			g.fillRect(mouseX, mouseY-10, 3, 7);
@@ -98,7 +97,22 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	class Key implements KeyListener{
 		@Override
 		public void keyPressed(KeyEvent e) {
-			
+			if(e.getKeyCode()==KeyEvent.VK_W) {
+				player.moveUp();
+				drPanel.repaint();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_A) {
+				player.moveLeft();
+				drPanel.repaint();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_D) {
+				player.moveRight();
+				drPanel.repaint();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_S) {
+				player.moveDown();
+				drPanel.repaint();
+			}
 		}
 
 		@Override
@@ -112,6 +126,8 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	long lastShot = 0;
 	
 	void shoot() {
+		int pCenterX = player.x+player.width/2;
+		int pCenterY = player.y+player.height/2;//finds center of the players
 		if (bulletList.size() >= Bullets.MAXBULLETS) return;
 
 		long now = System.currentTimeMillis();
@@ -128,7 +144,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	void moveLasers() {
 		
 		for (Bullets z : bulletList) {
-			z.y += z.speedY;
+			z.y -= z.speedY;
 			z.x += z.speedX;
 			
 		}
