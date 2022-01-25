@@ -1,8 +1,11 @@
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,9 +40,8 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	int panW, panH;
 
 	Character player = new Character(985,500,30,50);
-
-
-	Map map = new Map(-10,-10,2000,1200);
+	House house = new House();
+	
 	MainGame(){
 		setupObjects();
 		moveBullets();
@@ -83,9 +85,13 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 
 		@Override
 		public void paintComponent(Graphics g) {
-			//super.paintComponent(g); 
-			map.paint(g);
+			//grass
+			super.paintComponent(g); //clear and set BGcolor
+			setBackground(Color.decode("#48c33a"));
+			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			house.paint(g);
 			player.paint(g);
+
 			for(Bullets z : bulletList) {				
 				z.paint(g);
 			}
@@ -94,55 +100,10 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			g.fillRect(mouseX+7, mouseY, 7, 3);
 			g.fillRect(mouseX, mouseY+7, 3, 7);
 			g.fillRect(mouseX, mouseY-10, 3, 7);
+			
+
 		}
 	}
-//	class KeyW implements KeyListener{
-//		@Override
-//		public void keyPressed(KeyEvent e) {
-//			if(e.getKeyCode()==KeyEvent.VK_W) {
-//				player.moveUp();				
-//			}
-//			drPanel.repaint();
-//		}
-//
-//		@Override
-//		public void keyTyped(KeyEvent e) {}
-//
-//		@Override
-//		public void keyReleased(KeyEvent e) {}
-//	}	
-//
-//	class KeyA implements KeyListener{
-//		@Override
-//		public void keyPressed(KeyEvent e) {
-//			if(e.getKeyCode()==KeyEvent.VK_A) {
-//				player.moveLeft();				
-//			}
-//			drPanel.repaint();
-//		}
-//
-//		@Override
-//		public void keyTyped(KeyEvent e) {}
-//
-//		@Override
-//		public void keyReleased(KeyEvent e) {}
-//	}
-//
-//	class KeyS implements KeyListener{
-//		@Override
-//		public void keyPressed(KeyEvent e) {
-//			if(e.getKeyCode()==KeyEvent.VK_S) {
-//				player.moveDown();				
-//			}
-//			drPanel.repaint();
-//		}
-//
-//		@Override
-//		public void keyReleased(KeyEvent e) {}
-//
-//		@Override
-//		public void keyTyped(KeyEvent e) {}
-//	}
 
 	class Key implements KeyListener{
 		boolean left,right,up,down;
