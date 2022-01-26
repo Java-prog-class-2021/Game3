@@ -293,6 +293,17 @@ public class House{
 		}
 		return checkWalls;
 	}
+	boolean checkWalls(Bullets c) {
+		boolean checkWalls = false;
+		for(int i=0;i<xWalls.length;i++) {
+			if(c.x+c.width >= xWalls[i]&& c.x <= xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.height >= yWalls[i] && c.y <= yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+					checkWalls = true;
+				}
+			}
+		}
+		return checkWalls;
+	}
 
 
 

@@ -169,7 +169,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	void moveBullets() {
 
 		for (Bullets z : bulletList) {
-			z.move();			
+			z.move();	
 		}
 
 		for(Bullets z : bulletList) {
@@ -179,6 +179,11 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			break;
 		}
 	}
+	
+	
+	
+	
+	
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
