@@ -37,11 +37,11 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	DrawingPanel drPanel = new DrawingPanel();
 
 	ArrayList<Bullets> bulletList = new ArrayList<Bullets>();
-	int panW, panH;
+	int panW, panH;//TODO
 
-	Character player = new Character(985,500,30,50);
+	Character player = new Character(985,540,30,50);
 	House house = new House();
-	
+
 	MainGame(){
 		setupObjects();
 		moveBullets();
@@ -57,8 +57,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		Timer timer = new Timer(10,this);
 		timer.start();
 
-		this.setVisible(true);		
-		//timer1.start();
+		this.setVisible(true);	
 	}
 
 	void setupObjects() {
@@ -100,7 +99,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			g.fillRect(mouseX+7, mouseY, 7, 3);
 			g.fillRect(mouseX, mouseY+7, 3, 7);
 			g.fillRect(mouseX, mouseY-10, 3, 7);
-			
+
 
 		}
 	}
@@ -116,22 +115,24 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		}
 		@Override
 		public void keyPressed(KeyEvent e) {
+
 			if (e.getKeyCode() == KeyEvent.VK_A) left = true;
 			if (e.getKeyCode() == KeyEvent.VK_D) right = true;
 			if (e.getKeyCode() == KeyEvent.VK_W) up = true;
 			if (e.getKeyCode() == KeyEvent.VK_S) down = true;
-			if(left)player.moveLeft();
-			if(right)player.moveRight();
-			if(up)player.moveUp();
-			if(down)player.moveDown();
+			if(left && !house.checkLeft(player))player.moveLeft();
+			if(right && !house.checkRight(player))player.moveRight();
+			if(up && !house.checkUp(player))player.moveUp();
+			if(down && !house.checkDown(player))player.moveDown();
+
 		}
 
-		
-		
+
+
 
 		@Override
 		public void keyTyped(KeyEvent e) {}
-		
+
 	}
 
 	long lastShot = 0;

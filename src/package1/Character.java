@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Color;
-class Character {
+class Character{
 	int x;//left side of character
 	int y;//top side of character
 	int width;
