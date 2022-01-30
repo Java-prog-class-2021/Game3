@@ -33,13 +33,12 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		});
 	}
 
-
 	DrawingPanel drPanel = new DrawingPanel();
 
 	ArrayList<Bullets> bulletList = new ArrayList<Bullets>();
 	int panW, panH;//TODO
 
-	Character player = new Character(985,540,30,50);
+	Character player = new Character(985,340,30,50);
 	House house = new House();
 
 	MainGame(){
@@ -120,10 +119,22 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			if (e.getKeyCode() == KeyEvent.VK_D) right = true;
 			if (e.getKeyCode() == KeyEvent.VK_W) up = true;
 			if (e.getKeyCode() == KeyEvent.VK_S) down = true;
-			if(left && !house.checkLeft(player))player.moveLeft();
-			if(right && !house.checkRight(player))player.moveRight();
-			if(up && !house.checkUp(player))player.moveUp();
-			if(down && !house.checkDown(player))player.moveDown();
+			if(left && !house.checkLeft(player)) {
+				player.moveLeft();
+				house.checkLeft(player);
+			}
+			if(right && !house.checkRight(player)) {
+				player.moveRight();
+				house.checkRight(player);
+			}
+			if(up && !house.checkUp(player)) {
+				player.moveUp();
+				house.checkUp(player);
+			}
+			if(down && !house.checkDown(player)) {
+				player.moveDown();
+				house.checkDown(player);
+			}
 
 		}
 
@@ -170,6 +181,10 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 
 		for (Bullets z : bulletList) {
 			z.move();	
+			if(house.checkWalls(z)) {
+				bulletList.remove(z);
+				break;
+			}
 		}
 
 		for(Bullets z : bulletList) {
