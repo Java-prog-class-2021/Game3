@@ -38,7 +38,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	ArrayList<Bullets> bulletList = new ArrayList<Bullets>();
 	int panW, panH;//TODO
 
-	Character player = new Character(985,340,30,50);
+	Character player = new Character(985,340,50);
 	House house = new House();
 
 	MainGame(){
@@ -88,12 +88,15 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			setBackground(Color.decode("#48c33a"));
 			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			house.paint(g);
-			player.paint(g);
+			
+
 
 			for(Bullets z : bulletList) {				
 				z.paint(g);
 			}
 
+			double angle = Math.atan2(mouseY-player.y,mouseX-player.x);
+			player.paint((Graphics2D)g,angle);
 			g.fillRect(mouseX-10, mouseY, 7, 3); //draws crosshair
 			g.fillRect(mouseX+7, mouseY, 7, 3);
 			g.fillRect(mouseX, mouseY+7, 3, 7);
@@ -149,8 +152,8 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	long lastShot = 0;
 
 	void shoot() {
-		int pCenterX = player.x+player.width/2;
-		int pCenterY = player.y+player.height/2;//finds center of the players
+		int pCenterX = player.x+player.diameter/2;
+		int pCenterY = player.y+player.diameter/2;//finds center of the players
 		if (bulletList.size() >= Bullets.MAXBULLETS) return;
 
 		long now = System.currentTimeMillis();
@@ -164,8 +167,8 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		this.setTitle(mouseX + ", " + mouseY + ", " + mClicked);	
 	}
 	void throwGrenade() {
-		int pCenterX = player.x+player.width/2;
-		int pCenterY = player.y+player.height/2;//finds center of the players
+		int pCenterX = player.x+player.diameter/2;
+		int pCenterY = player.y+player.diameter/2;//finds center of the players
 
 		long now = System.currentTimeMillis();
 		long elapsed = now - lastShot;
@@ -204,6 +207,7 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 	public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
+//		player.rotate(mouseX, mouseY);
 		drPanel.repaint();
 		this.setTitle(mouseX + ", " + mouseY + ", " + mClicked);
 	}

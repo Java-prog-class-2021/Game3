@@ -1,6 +1,7 @@
 
 import java.awt.Rectangle;
 import java.awt.Graphics;
+import java.awt.Color;
 import java.lang.Math;
 
 
@@ -39,6 +40,7 @@ class Bullets extends Rectangle{
 		y = (int)yy;
 	}
 	void paint(Graphics g) {
+		g.setColor(Color.BLACK);
 		g.fillOval(x,y, width, height);
 	}
 	

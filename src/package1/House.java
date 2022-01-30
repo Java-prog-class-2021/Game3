@@ -46,7 +46,7 @@ public class House{
 
 
 
-	//TODO need to finish xRemaining, yRemaining, widthRemainging and heightRemaining if this constructor is to be used
+	//TODO need to finish xRemaining, yRemaining, diameterRemainging and diameterRemaining if this constructor is to be used
 	//	public House(int xshift,int yshift){
 	//		//xshift moves all the x coords from the original position of x by xshift
 	//		//yshift moves all the y coords from the original position of y by yshift
@@ -62,7 +62,7 @@ public class House{
 	void paint(Graphics g) {
 
 
-		//main building walls x, y, width, height
+		//main building walls x, y, diameter, diameter
 		//wooden floors
 		g.setColor(Color.decode("#b57939"));
 		g.fillRect(400,465,1020,400);
@@ -316,8 +316,8 @@ public class House{
 	boolean checkWalls(Character c) {
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
-			if(c.x >= xWalls[i]&& c.x+c.width <= xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height >= yWalls[i] && c.y <= yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+			if(c.x >= xWalls[i]&& c.x+c.diameter <= xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.diameter >= yWalls[i] && c.y <= yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
 				}
 			}
@@ -327,7 +327,7 @@ public class House{
 	boolean checkWalls(Bullets c) {
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
-			if(c.x+c.width >= xWalls[i]&& c.x <= xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+			if(c.x+c.height >= xWalls[i]&& c.x <= xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
 				if(c.y+c.height >= yWalls[i] && c.y <= yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
 				}
@@ -347,6 +347,7 @@ public class House{
 				if(c.y > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
 					c.y = yWalls[i]+heightWalls[i];
+					c.cy=c.y+c.diameter/2;
 //					c.moveDown();
 				}
 			}
@@ -363,6 +364,7 @@ public class House{
 				if(c.y > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
 					c.x = xWalls[i]+widthWalls[i];
+					c.cx=c.x+c.diameter/2;
 //					c.moveRight();
 				}
 			}
@@ -373,10 +375,12 @@ public class House{
 	boolean trCheckUp(Character c) {//checks above top right corner
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
-			if(c.x > xWalls[i]&& c.x+c.width < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+			if(c.x > xWalls[i]&& c.x+c.diameter < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.diameter > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
 					c.y = yWalls[i]+heightWalls[i];
+					c.cy=c.y+c.diameter/2;
+					
 //					c.moveDown();
 				}
 			}
@@ -389,10 +393,11 @@ public class House{
 	boolean trCheckRight(Character c) {//checks right of top right
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
-			if(c.x+c.width > xWalls[i]&& c.x+c.width< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+			if(c.x+c.diameter > xWalls[i]&& c.x+c.diameter< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
 				if(c.y > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
-					c.x = xWalls[i]-c.width;
+					c.x = xWalls[i]-c.diameter;
+					c.cx=c.x+c.diameter/2;
 //					c.moveLeft();
 				}
 			}
@@ -404,9 +409,10 @@ public class House{
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
 			if(c.x > xWalls[i]&& c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+				if(c.y+c.diameter > yWalls[i] && c.y+c.diameter < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
-					c.y = yWalls[i] - c.height;
+					c.y = yWalls[i] - c.diameter;
+					c.cy=c.y+c.diameter/2;
 //					c.moveUp();
 				}
 			}
@@ -417,9 +423,10 @@ public class House{
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
 			if(c.x > xWalls[i] && c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+				if(c.y+c.diameter > yWalls[i] && c.y+c.diameter < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
 					c.x = xWalls[i]+widthWalls[i];
+					c.cx=c.x+c.diameter/2;
 //					c.moveRight();
 				}
 			}
@@ -432,10 +439,11 @@ public class House{
 	boolean brCheckDown(Character c) {
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
-			if(c.x+c.width > xWalls[i]&& c.x+c.width < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+			if(c.x+c.diameter > xWalls[i]&& c.x+c.diameter < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.diameter > yWalls[i] && c.y+c.diameter < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
-					c.y = yWalls[i] - c.height;
+					c.y = yWalls[i] - c.diameter;
+					c.cy=c.y+c.diameter/2;
 //					c.moveUp();
 				}
 			}
@@ -445,10 +453,11 @@ public class House{
 	boolean brCheckRight(Character c) {
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
-			if(c.x+c.width > xWalls[i]&& c.x+c.width< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+			if(c.x+c.diameter > xWalls[i]&& c.x+c.diameter< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.diameter > yWalls[i] && c.y+c.diameter < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
-					c.x = xWalls[i]-c.width;
+					c.x = xWalls[i]-c.diameter;
+					c.cx=c.x+c.diameter/2;
 //					c.moveLeft();
 				}
 			}
