@@ -1,0 +1,24 @@
+import java.awt.Rectangle;
+
+class Enemies extends Rectangle{
+	int x;
+	int y;
+	int w=50;
+	int h=50;
+
+	static final int armour=50;
+	static final int health=100;
+
+	Enemies(int x, int y, int w,int h){
+
+		this.x=x;
+		this.y=y;
+		this.w=w;
+		this.h=h;
+
+
+	}
+
+
+}
+
