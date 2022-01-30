@@ -281,6 +281,37 @@ public class House{
 
 
 	}
+	boolean checkLeft(Character c) {
+		if(tlCheckLeft(c)||blCheckLeft(c)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	boolean checkRight(Character c) {
+		if(trCheckRight(c) || brCheckRight(c)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	boolean checkUp(Character c) {
+		if(trCheckUp(c) || tlCheckUp(c)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	boolean checkDown(Character c) {
+		if(blCheckDown(c) || brCheckDown(c)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 	boolean checkWalls(Character c) {
 		boolean checkWalls = false;
@@ -307,7 +338,39 @@ public class House{
 
 
 
-	boolean checkUp(Character c) {
+
+
+	boolean tlCheckUp(Character c) {//checks above top left
+		boolean checkWalls = false;
+		for(int i=0;i<xWalls.length;i++) {
+			if(c.x > xWalls[i]&& c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+					checkWalls = true;
+//					c.y = yWalls[i]+heightWalls[i];
+					c.moveDown();
+				}
+			}
+
+		}
+
+		return checkWalls;
+
+	}
+	boolean tlCheckLeft(Character c) {//checks left of top left
+		boolean checkWalls = false;
+		for(int i=0;i<xWalls.length;i++) {
+			if(c.x > xWalls[i] && c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+					checkWalls = true;
+//					c.x = xWalls[i]+widthWalls[i];
+					c.moveRight();
+				}
+			}
+		}
+		return checkWalls;
+	}
+	
+	boolean trCheckUp(Character c) {//checks above top right corner
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
 			if(c.x > xWalls[i]&& c.x+c.width < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
@@ -323,37 +386,11 @@ public class House{
 		return checkWalls;
 
 	}
-	boolean checkDown(Character c) {
+	boolean trCheckRight(Character c) {//checks right of top right
 		boolean checkWalls = false;
 		for(int i=0;i<xWalls.length;i++) {
-			if(c.x > xWalls[i]&& c.x+c.width < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
-					checkWalls = true;
-//					c.y = yWalls[i] - c.height;
-					c.moveUp();
-				}
-			}
-		}
-		return checkWalls;
-	}
-	boolean checkLeft(Character c) {
-		boolean checkWalls = false;
-		for(int i=0;i<xWalls.length;i++) {
-			if(c.x +c.width > xWalls[i] && c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
-					checkWalls = true;
-//					c.x = xWalls[i]+widthWalls[i];
-					c.moveRight();
-				}
-			}
-		}
-		return checkWalls;
-	}
-	boolean checkRight(Character c) {
-		boolean checkWalls = false;
-		for(int i=0;i<xWalls.length;i++) {
-			if(c.x+c.width > xWalls[i]&& c.x< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
-				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+			if(c.x+c.width > xWalls[i]&& c.x+c.width< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
 					checkWalls = true;
 //					c.x = xWalls[i]-c.width;
 					c.moveLeft();
@@ -362,5 +399,116 @@ public class House{
 		}
 		return checkWalls;
 	}
+	
+	boolean blCheckDown(Character c) {//checks below bottom left
+		boolean checkWalls = false;
+		for(int i=0;i<xWalls.length;i++) {
+			if(c.x > xWalls[i]&& c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+					checkWalls = true;
+//					c.y = yWalls[i] - c.height;
+					c.moveUp();
+				}
+			}
+		}
+		return checkWalls;
+	}
+	boolean blCheckLeft(Character c) {//checks the left of bottom left
+		boolean checkWalls = false;
+		for(int i=0;i<xWalls.length;i++) {
+			if(c.x > xWalls[i] && c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+					checkWalls = true;
+//					c.x = xWalls[i]+widthWalls[i];
+					c.moveRight();
+				}
+			}
+		}
+		return checkWalls;
+	}
+	
+
+
+	boolean brCheckDown(Character c) {
+		boolean checkWalls = false;
+		for(int i=0;i<xWalls.length;i++) {
+			if(c.x+c.width > xWalls[i]&& c.x+c.width < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+					checkWalls = true;
+//					c.y = yWalls[i] - c.height;
+					c.moveUp();
+				}
+			}
+		}
+		return checkWalls;
+	}
+	boolean brCheckRight(Character c) {
+		boolean checkWalls = false;
+		for(int i=0;i<xWalls.length;i++) {
+			if(c.x+c.width > xWalls[i]&& c.x+c.width< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+				if(c.y+c.height > yWalls[i] && c.y+c.height < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+					checkWalls = true;
+//					c.x = xWalls[i]-c.width;
+					c.moveLeft();
+				}
+			}
+		}
+		return checkWalls;
+	}
+//	boolean checkUp(Character c) {
+//		boolean checkWalls = false;
+//		for(int i=0;i<xWalls.length;i++) {
+//			if(c.x > xWalls[i]&& c.x+c.width < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+//				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+//					checkWalls = true;
+////					c.y = yWalls[i]+heightWalls[i];
+//					c.moveDown();
+//				}
+//			}
+//
+//		}
+//
+//		return checkWalls;
+//
+//	}
+//	boolean checkDown(Character c) {
+//		boolean checkWalls = false;
+//		for(int i=0;i<xWalls.length;i++) {
+//			if(c.x > xWalls[i]&& c.x+c.width < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+//				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+//					checkWalls = true;
+////					c.y = yWalls[i] - c.height;
+//					c.moveUp();
+//				}
+//			}
+//		}
+//		return checkWalls;
+//	}
+//	boolean checkLeft(Character c) {
+//		boolean checkWalls = false;
+//		for(int i=0;i<xWalls.length;i++) {
+//			if(c.x +c.width > xWalls[i] && c.x < xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+//				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+//					checkWalls = true;
+////					c.x = xWalls[i]+widthWalls[i];
+//					c.moveRight();
+//				}
+//			}
+//		}
+//		return checkWalls;
+//	}
+//	boolean checkRight(Character c) {
+//		boolean checkWalls = false;
+//		for(int i=0;i<xWalls.length;i++) {
+//			if(c.x+c.width > xWalls[i]&& c.x< xWalls[i]+widthWalls[i]) {//checks if the x coords are within a wall
+//				if(c.y+c.height > yWalls[i] && c.y < yWalls[i]+heightWalls[i]) {//checks if the y coords are within a wall
+//					checkWalls = true;
+////					c.x = xWalls[i]-c.width;
+//					c.moveLeft();
+//				}
+//			}
+//		}
+//		return checkWalls;
+//	}
 	
 }
