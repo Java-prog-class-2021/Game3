@@ -2,7 +2,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Color;
-
+import java.awt.Image;
+//import java.awt.RenderingHints;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import java.io.IOException;
+//import java.io.InputStream;
+import java.net.URL;
+//import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 public class House{
 	//is the array of x coords for walls and structures the player can't walk through
 	int[] xWalls = {/*0-3 top left kitchen wall*/400,400,850,940,
@@ -37,6 +46,16 @@ public class House{
 			/*10 singular 90x100 wall*/100,
 			/*11-14 glass windows*/105,105,105,100,
 			/*15 Kitchen counter*/90};
+	Image imgBush;
+	Image imgSofa;
+	Image imgGlass1;
+	Image imgGlass2;
+	Image imgGlass3;
+	Image imgGrass;
+	Image imgSink;
+	Image imgCuttingBoard;
+	Image imgTable;
+	Image imgBlood;
 
 	//this is the array for x coords of stuff the player can walk through, or doesn't affect the player
 	//	int[] xRemaining = {/*Stove*/540,/*Stove2 (after recolor)*/548,580,548,580,
@@ -58,10 +77,34 @@ public class House{
 	//		}
 	//	}
 
-	public House() {}
+	public House() {
+		
+		String filename1 = "bush.png";	
+		imgBush = loadImage(filename1);	
+		String filename2 = "sofa.png";	
+		imgSofa = loadImage(filename2);
+		String filename3 = "glass1.png";	
+		imgGlass1 = loadImage(filename3);
+		String filename4 = "glass2.png";	
+		imgGlass2 = loadImage(filename4);
+		String filename5 = "glass3.png";	
+		imgGlass3 = loadImage(filename5);
+		String filename6 = "grass.jpg";	
+		imgGrass = loadImage(filename6);
+		String filename7 = "sink.jpg";	
+		imgSink = loadImage(filename7);
+		String filename8 = "cuttingBoard.png";	
+		imgCuttingBoard = loadImage(filename8);
+		String filename9 = "table.png";	
+		imgTable = loadImage(filename9);
+		String filename10 = "blood.png";	
+		imgBlood = loadImage(filename10);
+		
+	}
 	void paint(Graphics g) {
 
-
+		//grass
+		g.drawImage(imgGrass, 0,0,1920,1080,null);
 		//main building walls x, y, diameter, diameter
 		//wooden floors
 		g.setColor(Color.decode("#b57939"));
@@ -279,6 +322,35 @@ public class House{
 		g.fillRect(1082, 335, 60, 60);
 		g.fillRect(1217, 335, 60, 60);
 
+		//bushes
+		g.drawImage(imgBush, 50,50,200,200,null);
+		g.drawImage(imgBush, 550,150,200,200,null);
+		g.drawImage(imgBush, 150,800,200,200,null);
+		g.drawImage(imgBush, 1650,200,200,200,null);
+		g.drawImage(imgBush, 1450,600,200,200,null);
+		
+		//Sofa
+		g.drawImage(imgSofa, 1000,665,300,250,null);
+		
+		//broken glass
+		g.drawImage(imgGlass1, 410,630,50,50,null);
+		g.drawImage(imgGlass2, 375,665,50,50,null);
+		g.drawImage(imgGlass3, 500,665,50,50,null);
+		
+		//kitchen stuff
+		g.drawImage(imgSink, 625,448,100,75,null);
+		g.drawImage(imgCuttingBoard, 730,448,100,75,null);
+		
+		//table
+		g.drawImage(imgTable, 1000,150,300,300,null);
+		
+		//blood on wooden floor
+		g.drawImage(imgBlood, 500,600,50,50,null);
+		g.drawImage(imgBlood, 600,750,50,50,null);
+		g.drawImage(imgBlood, 1000,700,50,50,null);
+		g.drawImage(imgBlood, 500,600,50,50,null);
+		g.drawImage(imgBlood, 800,600,50,50,null);
+		g.drawImage(imgBlood, 1200,600,50,50,null);
 
 	}
 	boolean checkLeft(Character c) {
@@ -463,6 +535,26 @@ public class House{
 			}
 		}
 		return checkWalls;
+	}
+	
+	Image loadImage(String filename) {
+
+		Image image = null;
+		
+		
+		URL imageURL = this.getClass().getResource("/" + filename); 
+
+//		InputStream inputStr = House.class.getClassLoader().getResourceAsStream(filename);
+
+		if (imageURL != null) {
+			ImageIcon icon = new ImageIcon(imageURL);				
+			image = icon.getImage();
+		} else {
+			JOptionPane.showMessageDialog(null, "An image failed to load: " + filename , "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+
+
+		return image;
 	}
 
 	
