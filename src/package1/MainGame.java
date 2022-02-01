@@ -90,13 +90,14 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 			house.paint(g);
 			
 
-
+			
 			for(Bullets z : bulletList) {				
 				z.paint(g);
 			}
 
 			double angle = Math.atan2(mouseY-player.y,mouseX-player.x);
 			player.paint((Graphics2D)g,angle);
+			
 			g.fillRect(mouseX-10, mouseY, 7, 3); //draws crosshair
 			g.fillRect(mouseX+7, mouseY, 7, 3);
 			g.fillRect(mouseX, mouseY+7, 3, 7);
@@ -191,7 +192,8 @@ public class MainGame extends JFrame implements MouseListener, MouseMotionListen
 		}
 
 		for(Bullets z : bulletList) {
-			if (z.y < 0 || z.x < 0) bulletList.remove(z);			
+			if (z.y < 0 || z.x < 0) bulletList.remove(z);
+			if (z.y > 5000 || z.x > 5000) bulletList.remove(z);
 			//TODO: also if they go off of the other two sides
 
 			break;
